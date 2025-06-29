@@ -1,3 +1,4 @@
 <resources>
-    <string name="app_name">TopAcademy_android</string>
+    <string name="app_name" translatable="false">TopAcademy_android</string>
+    <string name="creatorName">Alexandr</string>
 </resources>

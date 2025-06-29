@@ -18,6 +18,10 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
+        binding.button.setOnClickListener {
+            binding.twTitle.text = getString(R.string.creatorName)
+        }
+
         Log.i(ON_CREATE, "Активити создана!")
     }
 
