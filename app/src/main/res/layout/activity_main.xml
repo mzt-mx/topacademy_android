@@ -11,7 +11,11 @@
         android:id="@+id/tw_title"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
+<<<<<<< HEAD
         android:text="@string/creatorName"
+=======
+        android:text="Максим Мельзетдинов"
+>>>>>>> c77619caad9d49f7341fdf848208ac09c02942dc
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
