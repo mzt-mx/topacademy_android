@@ -1,3 +1,8 @@
 <resources>
     <string name="app_name">TopAcademy_android</string>
+    <string name="weather_icon">Weather icon</string>
+    <string name="title_activity_detail">DetailActivity</string>
+    <string name="current_weather_icon">Current weather icon</string>
+    <string name="hourly_forecast">Hourly Forecast</string>
+    <string name="weekly_forecast">Weekly Forecast</string>
 </resources>
