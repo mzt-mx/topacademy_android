@@ -3,6 +3,7 @@ package com.example.topacademy_android
 import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.topacademy_android.adapter.HourlyForecastAdapter
@@ -20,15 +21,11 @@ import retrofit2.http.Query
 class MainActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityMainBinding
-
     private lateinit var hourlyAdapter: HourlyForecastAdapter
     private lateinit var weeklyAdapter: WeeklyForecastAdapter
 
-    private val coroutineScope = CoroutineScope(Dispatchers.Main + SupervisorJob())
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
@@ -47,7 +44,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun fetchWeather() {
-        coroutineScope.launch {
+        lifecycleScope.launch {
             try {
                 val service = RetrofitInstance.api
 
@@ -112,14 +109,7 @@ class MainActivity : AppCompatActivity() {
         }
         weeklyAdapter.updateData(weeklyList)
     }
-
-    override fun onDestroy() {
-        super.onDestroy()
-        coroutineScope.cancel()
-    }
 }
-
-// Retrofit API interface
 
 interface WeatherApi {
     @GET("data/2.5/forecast")
@@ -152,17 +142,11 @@ object RetrofitInstance {
     }
 }
 
-// Helper function to load icon with Glide
-
 fun loadWeatherIcon(imageView: android.widget.ImageView, iconCode: String?) {
     if (iconCode == null) return
     val iconUrl = "https://openweathermap.org/img/wn/${iconCode}@2x.png"
-    Glide.with(imageView.context)
-        .load(iconUrl)
-        .into(imageView)
+    Glide.with(imageView.context).load(iconUrl).into(imageView)
 }
-
-// Conversion function for hourly forecast
 
 fun ForecastItemToHourly(item: ForecastItem): HourlyForecast {
     return HourlyForecast(
@@ -171,8 +155,6 @@ fun ForecastItemToHourly(item: ForecastItem): HourlyForecast {
         iconCode = item.weather.firstOrNull()?.icon
     )
 }
-
-// Models for adapters
 
 data class HourlyForecast(
     val hour: String,
