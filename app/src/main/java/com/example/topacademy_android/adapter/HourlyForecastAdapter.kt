@@ -24,7 +24,7 @@ class HourlyForecastAdapter(private var data: List<HourlyForecast>) :
         holder.binding.tvHour.text = item.hour
         holder.binding.tvTemp.text = "${item.temp}°"
 
-        // Загружаем иконку через Glide
+       
         val iconCode = item.iconCode
         if (iconCode != null) {
             val iconUrl = "https://openweathermap.org/img/wn/${iconCode}@2x.png"
@@ -32,7 +32,7 @@ class HourlyForecastAdapter(private var data: List<HourlyForecast>) :
                 .load(iconUrl)
                 .into(holder.binding.imgIcon)
         } else {
-            // Если iconCode нет, можно очистить или поставить плейсхолдер
+            
             holder.binding.imgIcon.setImageResource(0)
         }
     }
