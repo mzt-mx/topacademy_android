@@ -83,9 +83,19 @@ class MainActivity : AppCompatActivity() {
         binding.tvCurrentTemp.text = "${currentWeather.main.temp.toInt()}°"
         binding.tvCurrentCondition.text = currentWeather.weather.firstOrNull()?.description ?: "N/A"
         binding.tvLocation.text = currentWeather.name
-
         val iconCode = currentWeather.weather.firstOrNull()?.icon
         loadWeatherIcon(binding.imgCurrentWeatherIcon, iconCode)
+        binding.tvHumidity.text = "Влажность: ${currentWeather.main.humidity}%"
+        binding.tvPressure.text = "Давление: ${currentWeather.main.pressure} гПа"
+        binding.tvWindSpeed.text = "Ветер: ${currentWeather.wind.speed} м/с"
+
+
+        Toast.makeText(
+            this,
+            "${currentWeather.name}, ${currentWeather.main.temp}°C, ${currentWeather.weather.firstOrNull()?.description}, " +
+                    "${currentWeather.main.humidity}%, ${currentWeather.main.pressure} гПа, ${currentWeather.wind.speed} м/с",
+            Toast.LENGTH_LONG
+        ).show()
     }
 
     private fun updateHourlyForecast(response: WeatherResponse) {
@@ -104,8 +114,26 @@ class MainActivity : AppCompatActivity() {
             val minTemp = temps.minOrNull()?.toInt() ?: 0
             val maxTemp = temps.maxOrNull()?.toInt() ?: 0
             val iconCode = entry.value.first().weather.firstOrNull()?.icon
+            val description = entry.value.first().weather.firstOrNull()?.description
 
-            WeeklyForecast(day, minTemp, maxTemp, iconCode)
+            val precip = entry.value.mapNotNull { it.javaClass.methods.find { m -> m.name == "getRain" }?.invoke(it) }
+                .mapNotNull { rainObj ->
+                    try {
+                        val field = rainObj?.javaClass?.getDeclaredField("_1h")
+                        field?.isAccessible = true
+                        (field?.get(rainObj) as? Number)?.toInt()
+                    } catch (e: Exception) { null }
+                }.sum()
+            val windAvg = entry.value.mapNotNull { it.javaClass.methods.find { m -> m.name == "getWind" }?.invoke(it) }
+                .mapNotNull { windObj ->
+                    try {
+                        val field = windObj?.javaClass?.getDeclaredField("speed")
+                        field?.isAccessible = true
+                        (field?.get(windObj) as? Number)?.toDouble()
+                    } catch (e: Exception) { null }
+                }.average().takeIf { !it.isNaN() } ?: 0.0
+
+            WeeklyForecast(day, minTemp, maxTemp, iconCode, description, precip, windAvg)
         }
         weeklyAdapter.updateData(weeklyList)
     }
@@ -166,5 +194,18 @@ data class WeeklyForecast(
     val day: String,
     val minTemp: Int,
     val maxTemp: Int,
-    val iconCode: String?
+    val iconCode: String?,
+    val description: String?,
+    val precip: Int?,
+    val wind: Double?
+)
+
+data class MainWeatherCard(
+    val city: String,
+    val temp: Int,
+    val description: String,
+    val iconCode: String?,
+    val humidity: Int,
+    val pressure: Int,
+    val windSpeed: Double
 )

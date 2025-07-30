@@ -6,7 +6,8 @@ import kotlinx.parcelize.Parcelize
 @Parcelize
 data class CurrentWeatherResponse(
     val weather: List<WeatherDescription>,
-    val main: Main,
+    val main: CurrentMain,
+    val wind: Wind, // добавлено поле wind
     val name: String
 ) : Parcelable
 
@@ -16,3 +17,14 @@ data class WeatherDescription(
     val icon: String
 ) : Parcelable
 
+@Parcelize
+data class CurrentMain(
+    val temp: Double,
+    val pressure: Int,
+    val humidity: Int
+) : Parcelable
+
+@Parcelize
+data class Wind(
+    val speed: Double
+) : Parcelable

@@ -22,7 +22,10 @@ class WeeklyForecastAdapter(private var data: List<WeeklyForecast>) :
     override fun onBindViewHolder(holder: WeeklyViewHolder, position: Int) {
         val item = data[position]
         holder.binding.tvDay.text = item.day
-        holder.binding.tvTempRange.text = "${item.minTemp}° - ${item.maxTemp}°"
+        holder.binding.tvTempRange.text = "${item.minTemp}° / ${item.maxTemp}°"
+        holder.binding.tvDescription.text = item.description?.replaceFirstChar { it.uppercase() } ?: ""
+        holder.binding.tvPrecip.text = if (item.precip != null) "Осадки: ${item.precip}%" else ""
+        holder.binding.tvWind.text = if (item.wind != null) "Ветер: ${"%.1f".format(item.wind)} м/с" else ""
 
         val iconCode = item.iconCode
         if (iconCode != null) {

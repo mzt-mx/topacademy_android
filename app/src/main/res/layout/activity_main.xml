@@ -37,13 +37,12 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginBottom="16dp"
-                app:cardCornerRadius="16dp"
-                app:cardElevation="6dp"
-                android:padding="16dp"
-                android:background="@color/card_bg" >
+                app:cardCornerRadius="20dp"
+                app:cardElevation="8dp"
+                android:background="@android:color/white"
+                android:padding="24dp">
 
-
-            <LinearLayout
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
                     android:orientation="vertical"
@@ -54,7 +53,6 @@
                         android:layout_width="80dp"
                         android:layout_height="80dp"
                         android:contentDescription="@string/current_weather_icon"
-                        app:tint="@color/white"
                         android:src="@drawable/ic_sunny" />
 
                     <TextView
@@ -62,8 +60,8 @@
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:text="20°"
-                        android:textColor="@android:color/white"
-                        android:textSize="64sp"
+                        android:textColor="#222222"
+                        android:textSize="56sp"
                         android:textStyle="bold"
                         android:layout_marginTop="8dp" />
 
@@ -71,18 +69,53 @@
                         android:id="@+id/tvCurrentCondition"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="Clear Sky"
-                        android:textColor="@android:color/white"
-                        android:textSize="20sp" />
+                        android:text="Ясно"
+                        android:textColor="#444444"
+                        android:textSize="22sp"
+                        android:layout_marginTop="4dp" />
 
                     <TextView
                         android:id="@+id/tvLocation"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:text="London, UK"
-                        android:textColor="@android:color/darker_gray"
-                        android:textSize="14sp"
-                        android:layout_marginTop="4dp" />
+                        android:text="Москва"
+                        android:textColor="#888888"
+                        android:textSize="16sp"
+                        android:layout_marginTop="2dp" />
+
+                    <LinearLayout
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:orientation="horizontal"
+                        android:gravity="center"
+                        android:layout_marginTop="12dp">
+
+                        <TextView
+                            android:id="@+id/tvHumidity"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Влажность: 60%"
+                            android:textColor="#444444"
+                            android:textSize="16sp"
+                            android:layout_marginEnd="16dp" />
+
+                        <TextView
+                            android:id="@+id/tvPressure"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Давление: 1012 гПа"
+                            android:textColor="#444444"
+                            android:textSize="16sp"
+                            android:layout_marginEnd="16dp" />
+
+                        <TextView
+                            android:id="@+id/tvWindSpeed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Ветер: 5 м/с"
+                            android:textColor="#444444"
+                            android:textSize="16sp" />
+                    </LinearLayout>
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 
