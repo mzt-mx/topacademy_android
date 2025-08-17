@@ -2,22 +2,11 @@ package com.example.topacademy_android
 
 import android.os.Bundle
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.Observer
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.topacademy_android.feature_forecast.domain.WeatherRepository
-import com.example.topacademy_android.feature_forecast.data.WeatherRepositoryImpl
-import com.example.topacademy_android.feature_forecast.presentation.HourlyForecast
-import com.example.topacademy_android.feature_forecast.presentation.adapters.HourlyForecastAdapter
-import com.example.topacademy_android.feature_forecast.presentation.adapters.WeeklyForecastAdapter
-import com.example.topacademy_android.feature_forecast.data.CurrentWeatherResponse
-import com.example.topacademy_android.feature_forecast.data.ForecastItem
-import com.example.topacademy_android.feature_forecast.data.WeatherResponse
 import com.example.topacademy_android.databinding.ActivityMainBinding
-import com.example.topacademy_android.feature_forecast.presentation.WeatherViewModel
 import kotlinx.coroutines.*
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -29,10 +18,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
     private lateinit var hourlyAdapter: HourlyForecastAdapter
     private lateinit var weeklyAdapter: WeeklyForecastAdapter
-
-    private val weatherViewModel: WeatherViewModel by lazy {
-        WeatherViewModel(WeatherRepositoryImpl.create())
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -49,27 +34,10 @@ class MainActivity : AppCompatActivity() {
         binding.rvWeekly.layoutManager = LinearLayoutManager(this)
         binding.rvWeekly.adapter = weeklyAdapter
 
-        val apiKey = "85afd36bff2ab36aac6bdf3a9e0bec09"
-        observeWeather()
-        weatherViewModel.fetchCurrentWeather("Moscow", apiKey)
-        weatherViewModel.fetchForecast("Moscow", apiKey)
     }
 
-    private fun observeWeather() {
-        weatherViewModel.currentWeather.observe(this, Observer { currentWeather ->
-            currentWeather?.let { updateCurrentWeatherUI(it) }
-        })
-        weatherViewModel.forecast.observe(this, Observer { forecast ->
-            forecast?.let {
-                updateHourlyForecast(it)
-                updateWeeklyForecast(it)
             }
-        })
-        weatherViewModel.error.observe(this, Observer { errorMsg ->
-            errorMsg?.let {
-                Toast.makeText(this, "Error: $it", Toast.LENGTH_LONG).show()
             }
-        })
     }
 
     private fun updateCurrentWeatherUI(currentWeather: CurrentWeatherResponse) {
@@ -92,7 +60,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateHourlyForecast(response: WeatherResponse) {
-        val hourlyList: List<HourlyForecast> = response.list.take(5).map {
             ForecastItemToHourly(it)
         }
         hourlyAdapter.updateData(hourlyList)
