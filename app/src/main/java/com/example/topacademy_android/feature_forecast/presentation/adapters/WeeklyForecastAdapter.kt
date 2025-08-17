@@ -5,7 +5,7 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.topacademy_android.databinding.ItemWeeklyForecastBinding
-import com.example.topacademy_android.WeeklyForecast
+import com.example.topacademy_android.feature_forecast.presentation.WeeklyForecast
 
 class WeeklyForecastAdapter(private var data: List<WeeklyForecast>) :
     RecyclerView.Adapter<WeeklyForecastAdapter.WeeklyViewHolder>() {
@@ -45,4 +45,3 @@ class WeeklyForecastAdapter(private var data: List<WeeklyForecast>) :
         notifyDataSetChanged()
     }
 }
-

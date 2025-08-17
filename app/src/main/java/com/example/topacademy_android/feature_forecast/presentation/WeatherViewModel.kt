@@ -19,10 +19,10 @@ class WeatherViewModel(private val repository: WeatherRepository) : ViewModel() 
     private val _error = MutableLiveData<String>()
     val error: LiveData<String> = _error
 
-    fun fetchCurrentWeather(city: String, apiKey: String, units: String = "metric", lang: String = "en") {
+    fun fetchCurrentWeather(city: String, units: String = "metric", lang: String = "en") {
         viewModelScope.launch {
             try {
-                val response = repository.getCurrentWeather(city, apiKey, units, lang)
+                val response = repository.getCurrentWeather(city, units, lang)
                 _currentWeather.value = response
             } catch (e: Exception) {
                 _error.value = e.message
@@ -30,10 +30,10 @@ class WeatherViewModel(private val repository: WeatherRepository) : ViewModel() 
         }
     }
 
-    fun fetchForecast(city: String, apiKey: String, units: String = "metric", lang: String = "en") {
+    fun fetchForecast(city: String = "Москва", units: String = "metric", lang: String = "ru") {
         viewModelScope.launch {
             try {
-                val response = repository.getForecast(city, apiKey, units, lang)
+                val response = repository.getForecast(city, units, lang)
                 _forecast.value = response
             } catch (e: Exception) {
                 _error.value = e.message
