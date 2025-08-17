@@ -6,11 +6,6 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.example.topacademy_android.adapter.HourlyForecastAdapter
-import com.example.topacademy_android.adapter.WeeklyForecastAdapter
-import com.example.topacademy_android.data.CurrentWeatherResponse
-import com.example.topacademy_android.data.ForecastItem
-import com.example.topacademy_android.data.WeatherResponse
 import com.example.topacademy_android.databinding.ActivityMainBinding
 import kotlinx.coroutines.*
 import retrofit2.Retrofit
@@ -36,47 +31,13 @@ class MainActivity : AppCompatActivity() {
 
         binding.rvHourly.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
         binding.rvHourly.adapter = hourlyAdapter
-
         binding.rvWeekly.layoutManager = LinearLayoutManager(this)
         binding.rvWeekly.adapter = weeklyAdapter
 
-        fetchWeather()
     }
 
-    private fun fetchWeather() {
-        lifecycleScope.launch {
-            try {
-                val service = RetrofitInstance.api
-
-                val currentWeatherDeferred = async(Dispatchers.IO) {
-                    service.getCurrentWeather(
-                        lat = 55.7558,
-                        lon = 37.6173,
-                        appId = "85afd36bff2ab36aac6bdf3a9e0bec09",
-                        units = "metric"
-                    )
-                }
-
-                val forecastDeferred = async(Dispatchers.IO) {
-                    service.getFiveDayForecast(
-                        lat = 55.7558,
-                        lon = 37.6173,
-                        appId = "85afd36bff2ab36aac6bdf3a9e0bec09",
-                        units = "metric"
-                    )
-                }
-
-                val currentWeather = currentWeatherDeferred.await()
-                val forecast = forecastDeferred.await()
-
-                updateCurrentWeatherUI(currentWeather)
-                updateHourlyForecast(forecast)
-                updateWeeklyForecast(forecast)
-
-            } catch (e: Exception) {
-                Toast.makeText(this@MainActivity, "Error: ${e.message}", Toast.LENGTH_LONG).show()
             }
-        }
+            }
     }
 
     private fun updateCurrentWeatherUI(currentWeather: CurrentWeatherResponse) {
@@ -99,7 +60,6 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun updateHourlyForecast(response: WeatherResponse) {
-        val hourlyList = response.list.take(5).map {
             ForecastItemToHourly(it)
         }
         hourlyAdapter.updateData(hourlyList)
@@ -136,37 +96,6 @@ class MainActivity : AppCompatActivity() {
             WeeklyForecast(day, minTemp, maxTemp, iconCode, description, precip, windAvg)
         }
         weeklyAdapter.updateData(weeklyList)
-    }
-}
-
-interface WeatherApi {
-    @GET("data/2.5/forecast")
-    suspend fun getFiveDayForecast(
-        @Query("lat") lat: Double,
-        @Query("lon") lon: Double,
-        @Query("appid") appId: String,
-        @Query("units") units: String
-    ): WeatherResponse
-
-    @GET("data/2.5/weather")
-    suspend fun getCurrentWeather(
-        @Query("lat") lat: Double,
-        @Query("lon") lon: Double,
-        @Query("appid") appId: String,
-        @Query("units") units: String
-    ): CurrentWeatherResponse
-}
-
-object RetrofitInstance {
-    private val retrofit by lazy {
-        Retrofit.Builder()
-            .baseUrl("https://api.openweathermap.org/")
-            .addConverterFactory(GsonConverterFactory.create())
-            .build()
-    }
-
-    val api: WeatherApi by lazy {
-        retrofit.create(WeatherApi::class.java)
     }
 }
 
