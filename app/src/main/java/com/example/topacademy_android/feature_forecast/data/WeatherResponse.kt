@@ -1,9 +1,6 @@
 package com.example.topacademy_android.feature_forecast.data
 
 import android.os.Parcelable
-import com.example.topacademy_android.feature_forecast.data.ForecastItem
-import com.example.topacademy_android.feature_forecast.data.Main
-import com.example.topacademy_android.feature_forecast.data.Weather
 import kotlinx.parcelize.Parcelize
 import kotlinx.parcelize.RawValue
 

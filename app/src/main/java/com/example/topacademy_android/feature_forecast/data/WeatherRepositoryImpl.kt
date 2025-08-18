@@ -1,12 +1,9 @@
 package com.example.topacademy_android.feature_forecast.data
 
-import com.example.topacademy_android.feature_forecast.domain.WeatherRepository
 import okhttp3.Interceptor
 import okhttp3.OkHttpClient
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Query
 
 class WeatherRepositoryImpl(private val api: WeatherApi) : com.example.topacademy_android.feature_forecast.domain.WeatherRepository {
     override suspend fun getCurrentWeather(city: String, units: String, lang: String): CurrentWeatherResponse {
