@@ -21,9 +21,9 @@ class HomeActivity : AppCompatActivity() {
         }
 
         btnCalculator.setOnClickListener {
-            // Заглушка для калькулятора
-            Toast.makeText(this, "Калькулятор в разработке", Toast.LENGTH_SHORT).show()
+            // Переход к калькулятору
+            val intent = Intent(this, com.example.topacademy_android.feature_calculator.presentation.CalculatorActivity::class.java)
+            startActivity(intent)
         }
     }
 }
-

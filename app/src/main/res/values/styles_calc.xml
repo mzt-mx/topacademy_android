@@ -1,0 +1,34 @@
+<resources>
+    <style name="CalcButton" parent="Widget.MaterialComponents.Button">
+        <item name="android:layout_width">0dp</item>
+        <item name="android:layout_height">64dp</item>
+        <item name="android:layout_margin">4dp</item>
+        <item name="android:layout_gravity">fill</item>
+        <item name="android:textSize">24sp</item>
+        <item name="android:textColor">#FFFFFF</item>
+        <item name="android:backgroundTint">@color/purple_500</item>
+        <item name="android:elevation">4dp</item>
+        <item name="cornerRadius">32dp</item>
+        <item name="android:fontFamily">sans-serif-medium</item>
+    </style>
+    <style name="CalcButtonOp" parent="CalcButton">
+        <item name="android:backgroundTint">@color/orange</item>
+        <item name="android:textColor">#FFFDE7</item>
+    </style>
+    <style name="CalcButtonEq" parent="CalcButton">
+        <item name="android:backgroundTint">@color/teal_700</item>
+        <item name="android:textColor">#FFFFFF</item>
+    </style>
+    <style name="CalcDisplay" parent="TextAppearance.AppCompat.Large">
+        <item name="android:textColor">#FFEB3B</item>
+        <item name="android:textSize">40sp</item>
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:gravity">end</item>
+    </style>
+    <style name="CalcResult" parent="TextAppearance.AppCompat.Medium">
+        <item name="android:textColor">#B2FF59</item>
+        <item name="android:textSize">28sp</item>
+        <item name="android:fontFamily">monospace</item>
+        <item name="android:gravity">end</item>
+    </style>
+</resources>
