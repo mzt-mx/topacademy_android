@@ -4,28 +4,19 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.topacademy_android.databinding.ActivityMainBinding
 import com.example.topacademy_android.feature_forecast.presentation.ForecastItemToHourly
-import com.example.topacademy_android.feature_forecast.presentation.HourlyForecast
 import com.example.topacademy_android.feature_forecast.presentation.WeeklyForecast
 import com.example.topacademy_android.feature_forecast.presentation.adapters.HourlyForecastAdapter
 import com.example.topacademy_android.feature_forecast.presentation.adapters.WeeklyForecastAdapter
 import com.example.topacademy_android.feature_forecast.data.CurrentWeatherResponse
 import com.example.topacademy_android.feature_forecast.data.WeatherResponse
-import com.example.topacademy_android.feature_forecast.data.ForecastItem
-import com.example.topacademy_android.feature_forecast.data.OneCallResponse
 import com.example.topacademy_android.feature_forecast.presentation.WeatherViewModel
 import com.example.topacademy_android.feature_forecast.data.WeatherRepositoryImpl
 import java.text.SimpleDateFormat
 import java.util.*
-import kotlinx.coroutines.*
-import retrofit2.Retrofit
-import retrofit2.converter.gson.GsonConverterFactory
-import retrofit2.http.GET
-import retrofit2.http.Query
 
 class MainActivity : AppCompatActivity() {
     private lateinit var binding: ActivityMainBinding
