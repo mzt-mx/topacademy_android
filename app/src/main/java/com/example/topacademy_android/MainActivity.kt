@@ -15,6 +15,7 @@ import com.example.topacademy_android.feature_forecast.data.CurrentWeatherRespon
 import com.example.topacademy_android.feature_forecast.data.WeatherResponse
 import com.example.topacademy_android.feature_forecast.presentation.WeatherViewModel
 import com.example.topacademy_android.feature_forecast.data.WeatherRepositoryImpl
+import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -23,13 +24,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var hourlyAdapter: HourlyForecastAdapter
     private lateinit var weeklyAdapter: WeeklyForecastAdapter
 
-    private val viewModel: WeatherViewModel by viewModels {
-        object : androidx.lifecycle.ViewModelProvider.Factory {
-            override fun <T : androidx.lifecycle.ViewModel> create(modelClass: Class<T>): T {
-                return WeatherViewModel(WeatherRepositoryImpl.create()) as T
-            }
-        }
-    }
+    private val viewModel: WeatherViewModel by viewModel()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
