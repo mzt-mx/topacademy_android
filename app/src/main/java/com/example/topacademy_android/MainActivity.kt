@@ -1,6 +1,7 @@
 package com.example.topacademy_android
 
 import android.os.Bundle
+import android.widget.Button
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
@@ -55,6 +56,10 @@ class MainActivity : AppCompatActivity() {
             if (currentWeather != null) {
                 updateCurrentWeatherUI(currentWeather)
             }
+        }
+
+        binding.root.findViewById<Button>(R.id.backButton).setOnClickListener {
+            finish()
         }
     }
 

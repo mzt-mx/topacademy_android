@@ -5,4 +5,11 @@
     <string name="current_weather_icon">Current weather icon</string>
     <string name="hourly_forecast">Hourly Forecast</string>
     <string name="weekly_forecast">Weekly Forecast</string>
+    <string name="current_temp_sample">20°</string>
+    <string name="current_condition_sample">Ясно</string>
+    <string name="current_location_sample">Москва</string>
+    <string name="humidity_sample">Влажность: 60%</string>
+    <string name="pressure_sample">Давление: 1012 гПа</string>
+    <string name="wind_sample">Ветер: 5 м/с</string>
+    <string name="back">Назад</string>
 </resources>
