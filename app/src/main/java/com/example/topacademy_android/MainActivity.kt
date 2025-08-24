@@ -56,6 +56,11 @@ class MainActivity : AppCompatActivity() {
                 updateCurrentWeatherUI(currentWeather)
             }
         }
+
+        // Обработка нажатия на иконку назад в тулбаре
+        binding.topAppBar.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
     }
 
     private fun updateCurrentWeatherUI(currentWeather: CurrentWeatherResponse) {
