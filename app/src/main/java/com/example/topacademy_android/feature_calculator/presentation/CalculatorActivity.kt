@@ -73,9 +73,6 @@ class CalculatorActivity : AppCompatActivity() {
                 viewModel.onCalculate(expression)
             }
         }
-        findViewById<Button>(R.id.backButton).setOnClickListener {
-            finish()
-        }
         viewModel.result.observe(this) { result ->
             tvResult.text = result
         }

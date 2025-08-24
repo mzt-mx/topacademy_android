@@ -12,4 +12,5 @@
     <string name="pressure_sample">Давление: 1012 гПа</string>
     <string name="wind_sample">Ветер: 5 м/с</string>
     <string name="back">Назад</string>
+    <string name="calculator">Калькулятор</string>
 </resources>

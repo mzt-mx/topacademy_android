@@ -1,21 +1,16 @@
 package com.example.topacademy_android
 
 import android.os.Bundle
-import android.widget.Button
 import android.widget.Toast
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
 import com.example.topacademy_android.databinding.ActivityMainBinding
-import com.example.topacademy_android.feature_forecast.presentation.ForecastItemToHourly
-import com.example.topacademy_android.feature_forecast.presentation.WeeklyForecast
 import com.example.topacademy_android.feature_forecast.presentation.adapters.HourlyForecastAdapter
 import com.example.topacademy_android.feature_forecast.presentation.adapters.WeeklyForecastAdapter
 import com.example.topacademy_android.feature_forecast.data.CurrentWeatherResponse
 import com.example.topacademy_android.feature_forecast.data.WeatherResponse
 import com.example.topacademy_android.feature_forecast.presentation.WeatherViewModel
-import com.example.topacademy_android.feature_forecast.data.WeatherRepositoryImpl
 import org.koin.androidx.viewmodel.ext.android.viewModel
 import java.text.SimpleDateFormat
 import java.util.*
@@ -32,6 +27,9 @@ class MainActivity : AppCompatActivity() {
         binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
         setSupportActionBar(binding.topAppBar)
+        binding.topAppBar.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
         hourlyAdapter = HourlyForecastAdapter(emptyList())
         weeklyAdapter = WeeklyForecastAdapter(emptyList())
         binding.rvHourly.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
@@ -57,10 +55,6 @@ class MainActivity : AppCompatActivity() {
                 updateCurrentWeatherUI(currentWeather)
             }
         }
-
-        binding.root.findViewById<Button>(R.id.backButton).setOnClickListener {
-            finish()
-        }
     }
 
     private fun updateCurrentWeatherUI(currentWeather: CurrentWeatherResponse) {
@@ -78,41 +72,6 @@ class MainActivity : AppCompatActivity() {
                     "${currentWeather.main.humidity}%, ${currentWeather.main.pressure} гПа, ${currentWeather.wind.speed} м/с",
             Toast.LENGTH_LONG
         ).show()
-    }
-
-    private fun updateHourlyForecast(response: WeatherResponse) {
-        val hourlyList = response.list.map { ForecastItemToHourly(it) }
-        hourlyAdapter.updateData(hourlyList)
-    }
-
-    private fun updateWeeklyForecast(response: WeatherResponse) {
-        val dailyMap = response.list.groupBy { it.dt_txt.substring(0, 10) }
-        val weeklyList = dailyMap.map { entry ->
-            val day = entry.key
-            val temps = entry.value.map { it.main.temp }
-            val minTemp = temps.minOrNull()?.toInt() ?: 0
-            val maxTemp = temps.maxOrNull()?.toInt() ?: 0
-            val iconCode = entry.value.first().weather.firstOrNull()?.icon
-            val description = entry.value.first().weather.firstOrNull()?.description
-            val precip = entry.value.mapNotNull { it.javaClass.methods.find { m -> m.name == "getRain" }?.invoke(it) }
-                .mapNotNull { rainObj ->
-                    try {
-                        val field = rainObj?.javaClass?.getDeclaredField("_1h")
-                        field?.isAccessible = true
-                        (field?.get(rainObj) as? Number)?.toInt()
-                    } catch (e: Exception) { null }
-                }.sum()
-            val windAvg = entry.value.mapNotNull { it.javaClass.methods.find { m -> m.name == "getWind" }?.invoke(it) }
-                .mapNotNull { windObj ->
-                    try {
-                        val field = windObj?.javaClass?.getDeclaredField("speed")
-                        field?.isAccessible = true
-                        (field?.get(windObj) as? Number)?.toDouble()
-                    } catch (e: Exception) { null }
-                }.average().takeIf { !it.isNaN() } ?: 0.0
-            WeeklyForecast(day, minTemp, maxTemp, iconCode, description, precip, windAvg)
-        }
-        weeklyAdapter.updateData(weeklyList)
     }
 
     private fun loadWeatherIcon(imageView: android.widget.ImageView, iconCode: String?) {

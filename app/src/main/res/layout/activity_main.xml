@@ -24,7 +24,8 @@
                 android:background="?attr/colorPrimary"
                 android:title="@string/app_name"
                 android:titleTextColor="@android:color/white"
-                app:elevation="4dp" />
+                app:elevation="4dp"
+                app:navigationIcon="@drawable/ic_arrow_back" />
         </com.google.android.material.appbar.AppBarLayout>
 
         <androidx.core.widget.NestedScrollView
@@ -197,14 +198,5 @@
         </androidx.core.widget.NestedScrollView>
     </androidx.coordinatorlayout.widget.CoordinatorLayout>
 
-    <Button
-        android:id="@+id/backButton"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="@string/back"
-        android:contentDescription="@string/back"
-        android:layout_gravity="bottom|start"
-        android:layout_margin="16dp"
-        android:backgroundTint="@color/white"
-        android:textColor="@color/black"/>
+    <!-- Удалена кнопка backButton, теперь только стрелка на тулбаре -->
 </FrameLayout>
