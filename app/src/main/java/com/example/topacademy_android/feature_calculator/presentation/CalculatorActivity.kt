@@ -3,12 +3,12 @@ package com.example.topacademy_android.feature_calculator.presentation
 import android.os.Bundle
 import android.widget.Button
 import android.widget.TextView
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
 import com.example.topacademy_android.R
+import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class CalculatorActivity : AppCompatActivity() {
-    private val viewModel: CalculatorViewModel by viewModels()
+    private val viewModel: CalculatorViewModel by viewModel()
     private lateinit var tvExpression: TextView
     private lateinit var tvResult: TextView
     private var expression: String = ""
