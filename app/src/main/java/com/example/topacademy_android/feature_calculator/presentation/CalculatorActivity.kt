@@ -17,6 +17,12 @@ class CalculatorActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_calculator)
 
+        val toolbar = findViewById<com.google.android.material.appbar.MaterialToolbar>(R.id.topAppBar)
+        setSupportActionBar(toolbar)
+        toolbar.setNavigationOnClickListener {
+            onBackPressedDispatcher.onBackPressed()
+        }
+
         tvExpression = findViewById(R.id.tvExpression)
         tvResult = findViewById(R.id.tvResult)
 

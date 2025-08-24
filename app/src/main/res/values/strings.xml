@@ -5,4 +5,30 @@
     <string name="current_weather_icon">Current weather icon</string>
     <string name="hourly_forecast">Hourly Forecast</string>
     <string name="weekly_forecast">Weekly Forecast</string>
+    <string name="calculator_title">Калькулятор</string>
+    <string name="weather_title">Погода</string>
+    <string name="zero">0</string>
+    <string name="clear">C</string>
+    <string name="divide">÷</string>
+    <string name="multiply">×</string>
+    <string name="delete">⌫</string>
+    <string name="seven">7</string>
+    <string name="eight">8</string>
+    <string name="nine">9</string>
+    <string name="minus">-</string>
+    <string name="four">4</string>
+    <string name="five">5</string>
+    <string name="six">6</string>
+    <string name="plus">+</string>
+    <string name="one">1</string>
+    <string name="two">2</string>
+    <string name="three">3</string>
+    <string name="equals">=</string>
+    <string name="dot">,</string>
+    <string name="temp_sample">20°</string>
+    <string name="condition_sample">Ясно</string>
+    <string name="location_sample">Москва</string>
+    <string name="humidity_sample">Влажность: 60%</string>
+    <string name="pressure_sample">Давление: 1012 гПа</string>
+    <string name="wind_sample">Ветер: 5 м/с</string>
 </resources>
