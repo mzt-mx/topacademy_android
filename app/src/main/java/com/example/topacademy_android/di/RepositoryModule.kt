@@ -1,5 +1,6 @@
 package com.example.topacademy_android.di
 
+import com.example.topacademy_android.feature_calculator.data.CalculatorParser
 import com.example.topacademy_android.feature_calculator.data.CalculatorRepositoryImpl
 import com.example.topacademy_android.feature_calculator.domain.CalculateExpressionUseCase
 import com.example.topacademy_android.feature_calculator.domain.CalculatorRepository
@@ -9,8 +10,9 @@ import com.example.topacademy_android.feature_forecast.domain.WeatherRepository
 import org.koin.dsl.module
 
 val repositoryModule = module {
+    single { CalculatorParser() }
 
-    single<CalculatorRepository> { CalculatorRepositoryImpl() }
+    single<CalculatorRepository> { CalculatorRepositoryImpl(get()) }
     single { CalculateExpressionUseCase(get()) }
 
     single<WeatherRepository> { WeatherRepositoryImpl(get()) }

@@ -1,29 +1,24 @@
-package com.example.topacademy_android.feature_calculator.domain
+package com.example.topacademy_android.feature_calculator.data
 
 class CalculatorParser {
-
     fun eval(expr: String): Double {
         return object {
             var pos = -1
             var ch = 0
-
             fun nextChar() { ch = if (++pos < expr.length) expr[pos].code else -1 }
-
             fun eat(charToEat: Int): Boolean {
                 while (ch == ' '.code) nextChar()
                 if (ch == charToEat) { nextChar(); return true }
                 return false
             }
-
             fun parse(): Double {
                 nextChar()
                 val x = parseExpression()
                 if (pos < expr.length) {
-                    throw RuntimeException("Ошибка: недопустимый символ '" + expr[pos] + "' в выражении")
+                    throw RuntimeException()
                 }
                 return x
             }
-
             fun parseExpression(): Double {
                 var x = parseTerm()
                 while(true) {
@@ -34,7 +29,6 @@ class CalculatorParser {
                     }
                 }
             }
-
             fun parseTerm(): Double {
                 var x = parseFactor()
                 while(true) {
@@ -45,14 +39,11 @@ class CalculatorParser {
                     }
                 }
             }
-
             fun parseFactor(): Double {
                 if (eat('+'.code)) return parseFactor()
                 if (eat('-'.code)) return -parseFactor()
-
                 val startPos = pos
                 var x: Double
-
                 when {
                     ch in '0'.code..'9'.code || ch == '.'.code -> {
                         while (ch in '0'.code..'9'.code || ch == '.'.code) nextChar()
@@ -61,16 +52,14 @@ class CalculatorParser {
                     ch == '('.code -> {
                         nextChar()
                         x = parseExpression()
-                        if (!eat(')'.code)) throw RuntimeException("Ошибка: пропущена закрывающая скобка )")
+                        if (!eat(')'.code)) throw RuntimeException()
                     }
                     else -> {
-                        throw RuntimeException("Ошибка: недопустимый символ '" + ch.toChar() + "' в выражении")
+                        throw RuntimeException()
                     }
                 }
-
                 return x
             }
-
         }.parse()
     }
 }

@@ -1,10 +1,9 @@
 package com.example.topacademy_android.feature_calculator.data
 
-import com.example.topacademy_android.feature_calculator.domain.CalculatorParser
+import com.example.topacademy_android.feature_calculator.data.CalculatorParser
 import com.example.topacademy_android.feature_calculator.domain.CalculatorRepository
 
-class CalculatorRepositoryImpl : CalculatorRepository {
-    private val parser = CalculatorParser()
+class CalculatorRepositoryImpl(private val parser: CalculatorParser) : CalculatorRepository {
     override fun calculate(expression: String): String {
         return try {
             val result = parser.eval(expression)
@@ -13,7 +12,7 @@ class CalculatorRepositoryImpl : CalculatorRepository {
             } else {
                 String.format("%.2f", result)
             }
-        } catch (e: Exception) {
+        } catch (_: Exception) {
             "Ошибка"
         }
     }
