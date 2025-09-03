@@ -51,18 +51,11 @@ class CalculatorFragment : Fragment() {
         }
         binding.btnEquals.setOnClickListener {
             if (expression.isNotEmpty()) {
-                try {
-                    val result = eval(expression)
-                    val formatted = if (result % 1.0 == 0.0) {
-                        result.toInt().toString()
-                    } else {
-                        String.format("%.2f", result)
-                    }
-                    binding.tvResult.text = formatted
-                } catch (e: Exception) {
-                    binding.tvResult.text = "Ошибка"
-                }
+                viewModel.onCalculate(expression)
             }
+        }
+        viewModel.result.observe(viewLifecycleOwner) { formatted ->
+            binding.tvResult.text = formatted
         }
         binding.btnClear.setOnClickListener {
             expression = ""
@@ -75,59 +68,6 @@ class CalculatorFragment : Fragment() {
                 binding.tvExpression.text = if (expression.isEmpty()) "0" else expression
             }
         }
-    }
-
-    private fun eval(expr: String): Double {
-        // Парсер выражений
-        return object {
-            var pos = -1
-            var ch = 0
-            fun nextChar() { ch = if (++pos < expr.length) expr[pos].toInt() else -1 }
-            fun eat(charToEat: Int): Boolean {
-                while (ch == ' '.toInt()) nextChar()
-                if (ch == charToEat) { nextChar(); return true }
-                return false
-            }
-            fun parse(): Double {
-                nextChar()
-                val x = parseExpression()
-                if (pos < expr.length) throw RuntimeException("Unexpected: " + expr[pos])
-                return x
-            }
-            fun parseExpression(): Double {
-                var x = parseTerm()
-                while(true) {
-                    when {
-                        eat('+'.toInt()) -> x += parseTerm()
-                        eat('-'.toInt()) -> x -= parseTerm()
-                        else -> return x
-                    }
-                }
-            }
-            fun parseTerm(): Double {
-                var x = parseFactor()
-                while(true) {
-                    when {
-                        eat('*'.toInt()) -> x *= parseFactor()
-                        eat('/'.toInt()) -> x /= parseFactor()
-                        else -> return x
-                    }
-                }
-            }
-            fun parseFactor(): Double {
-                if (eat('+'.toInt())) return parseFactor() // unary plus
-                if (eat('-'.toInt())) return -parseFactor() // unary minus
-                var x: Double
-                val startPos = pos
-                if (ch in '0'.toInt()..'9'.toInt() || ch == '.'.toInt()) {
-                    while (ch in '0'.toInt()..'9'.toInt() || ch == '.'.toInt()) nextChar()
-                    x = expr.substring(startPos, pos).toDouble()
-                } else {
-                    throw RuntimeException("Unexpected: " + ch.toChar())
-                }
-                return x
-            }
-        }.parse()
     }
 
     override fun onDestroyView() {

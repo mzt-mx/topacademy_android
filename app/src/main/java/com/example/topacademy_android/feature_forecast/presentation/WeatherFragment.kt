@@ -1,4 +1,4 @@
-package com.example.topacademy_android
+package com.example.topacademy_android.feature_forecast.presentation
 
 import android.os.Bundle
 import android.view.LayoutInflater
@@ -9,11 +9,8 @@ import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.example.topacademy_android.databinding.FragmentWeatherBinding
 import com.example.topacademy_android.feature_forecast.data.WeatherResponse
-import com.example.topacademy_android.feature_forecast.presentation.HourlyForecast
-import com.example.topacademy_android.feature_forecast.presentation.WeeklyForecast
 import com.example.topacademy_android.feature_forecast.presentation.adapters.HourlyForecastAdapter
 import com.example.topacademy_android.feature_forecast.presentation.adapters.WeeklyForecastAdapter
-import com.example.topacademy_android.feature_forecast.presentation.WeatherViewModel
 import org.koin.androidx.viewmodel.ext.android.viewModel
 
 class WeatherFragment : Fragment() {
